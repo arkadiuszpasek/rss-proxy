@@ -8,6 +8,10 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 
+app.get('/', (req, res) => {
+  res.send('hello')
+})
+
 app.get('/rss', async (req, res) => {
   console.log('Got request', req);
   try {
