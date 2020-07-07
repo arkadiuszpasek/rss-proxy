@@ -14,16 +14,23 @@ app.get('/', (req, res) => {
 })
 
 app.get('/rss', async (req, res) => {
-  console.log('Got request', req);
+  console.log('Got request');
   try {
     const url = req.query.url;
-    if (url) {
-      const response = await axios.get(url);
-      res.type('text/plain');
-      res.send(response.data);
+    if (!url) {
+      res.sendStatus(400)
+      return;
     }
+
+    console.log('Querying...' + url);
+    const response = await axios.get(url);
+    console.log('Got response')
+    res.type('text/plain');
+    res.send(response.data);
+
   } catch (err) {
-    console.log(err);
+    console.log('Error occured: ', err);
+    res.sendStatus(404)
   }
 
 })
